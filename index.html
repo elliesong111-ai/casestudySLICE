@@ -156,27 +156,182 @@
       <li><strong>Week 7–8:</strong> Branding, bug fixes, final demo prep</li>
     </ul>
   </section>
-<section id="mindmap" style="margin: 60px 0;">
-  <h2>Design Logic (Mindmap)</h2>
-  <p>This section shows our design logic exported from XMind as a structured Markdown mindmap.</p>
+<!-- ====== Interactive Mindmap (vis-network) ====== -->
+<section id="interactive-mindmap" style="margin: 60px 0;">
+  <h2 style="color:#4b3ca5;">Design Logic Mindmap</h2>
+  <p style="max-width:900px;">
+    Interactive visualization of the website structure. Drag nodes, zoom, and click a node to see a short description below.
+  </p>
 
-  <div id="md-viewer" 
-       style="background:#fff; padding:30px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-    Loading mindmap...
+  <div style="max-width:1100px; margin:auto;">
+    <div id="mindmapViz" style="
+         width:100%;
+         height:620px;
+         border-radius:12px;
+         box-shadow:0 6px 18px rgba(75,60,165,0.12);
+         background:linear-gradient(180deg, rgba(232,216,255,0.35), rgba(250,248,255,0.6));
+         border:1px solid rgba(75,60,165,0.06);
+         overflow:hidden;"></div>
+
+    <div id="mindmapInfo" style="
+         margin-top:14px;
+         background:#fff;
+         border-radius:10px;
+         padding:16px;
+         box-shadow:0 4px 12px rgba(0,0,0,0.06);
+         font-size:15px;
+         color:#444;">
+      <strong>Click a node</strong> to view its description here.
+    </div>
   </div>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!-- vis-network CDN (no install needed) -->
+<link href="https://unpkg.com/vis-network@9.1.2/styles/vis-network.min.css" rel="stylesheet" />
+<script src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+
 <script>
-  fetch('Website.md')
-    .then(response => response.text())
-    .then(md => {
-      document.getElementById('md-viewer').innerHTML = marked.parse(md);
-    })
-    .catch(err => {
-      document.getElementById('md-viewer').innerHTML = "<p style='color:red;'>⚠️ Failed to load mindmap.</p>";
-      console.error(err);
+  (function(){
+    // 节点与说明（根据你给的结构定制）
+    const nodes = [
+      { id: 1, label: 'Website', level: 0, title: 'Root: Website' },
+      { id: 2, label: 'Homepage', level: 1, title: 'Homepage' },
+
+      { id: 3, label: 'Photobooth', level: 2, title: 'Photobooth section' },
+      { id: 4, label: 'instructions', level: 3, title: 'Guide users how to use photobooth' },
+      { id: 5, label: 'stickers', level: 3, title: 'Stickers / decorations for photos' },
+      { id: 6, label: 'download', level: 3, title: 'Download / save created photos' },
+      { id: 7, label: 'lightings', level: 3, title: 'Lighting presets / color adjustments' },
+      { id: 8, label: 'Camera settings', level: 3, title: 'Camera configuration (resolution / devices)' },
+
+      { id: 9, label: 'About Us', level: 2, title: 'About Us section' },
+      { id: 10, label: 'Why We are Amazing', level: 3, title: 'Key selling points / strengths' }
+    ];
+
+    const edges = [
+      { from: 1, to: 2 },
+      { from: 2, to: 3 },
+      { from: 3, to: 4 },
+      { from: 3, to: 5 },
+      { from: 3, to: 6 },
+      { from: 3, to: 7 },
+      { from: 3, to: 8 },
+      { from: 2, to: 9 },
+      { from: 9, to: 10 }
+    ];
+
+    // 下面这个 map 用来显示节点描述（点击节点时显示）
+    const descriptions = {
+      1: "<strong>Website</strong> — the top-level product containing all pages and features.",
+      2: "<strong>Homepage</strong> — entry point; contains navigation to Photobooth and About Us.",
+      3: "<strong>Photobooth</strong> — core interactive feature where users take or upload photos and edit them.",
+      4: "<strong>instructions</strong> — usage guide to help users operate the photobooth smoothly.",
+      5: "<strong>stickers</strong> — customization elements (stickers/emojis/frames) for photos.",
+      6: "<strong>download</strong> — allow users to save/export their created images.",
+      7: "<strong>lightings</strong> — lighting filters and color controls for photos.",
+      8: "<strong>Camera settings</strong> — controls for camera device, resolution, permissions.",
+      9: "<strong>About Us</strong> — informational page describing team and mission.",
+      10: "<strong>Why We are Amazing</strong> — the unique selling points and strengths we present to users."
+    };
+
+    // vis-network 数据与选项
+    const container = document.getElementById('mindmapViz');
+    const data = {
+      nodes: new vis.DataSet(nodes.map(n => ({
+        id: n.id,
+        label: n.label,
+        title: n.title,
+        level: n.level,
+        shape: 'box',
+        font: { color: '#fff', size: 14 },
+        color: {
+          background: (n.level === 0) ? '#6a5acd' : (n.level === 1) ? '#8e78ff' : '#cdbcff',
+          border: '#6a5acd'
+        },
+        margin: 10
+      }))),
+      edges: new vis.DataSet(edges.map(e => ({
+        from: e.from,
+        to: e.to,
+        arrows: { to: false },
+        color: { color: 'rgba(75,60,165,0.14)' },
+        width: 2
+      })))
+    };
+
+    const options = {
+      interaction: {
+        dragNodes: true,
+        dragView: true,
+        zoomView: true,
+        multiselect: false,
+        hover: true
+      },
+      physics: {
+        enabled: true,
+        barnesHut: {
+          gravitationalConstant: -4000,
+          centralGravity: 0.15,
+          springLength: 200,
+          springConstant: 0.04,
+          damping: 0.09
+        },
+        stabilization: { iterations: 250 }
+      },
+      layout: {
+        improvedLayout: true,
+      },
+      nodes: {
+        borderWidth: 2,
+        shape: 'box',
+        color: {
+          border: '#4b3ca5'
+        }
+      }
+    };
+
+    const network = new vis.Network(container, data, options);
+
+    // 缩放到 root 节点（初始）
+    network.once('stabilizationIterationsDone', function () {
+      network.fit({ nodes: [1], animation: { duration: 600 } });
     });
+
+    // 点击节点显示说明并居中
+    network.on('click', function (params) {
+      if (params.nodes.length > 0) {
+        const id = params.nodes[0];
+        const infoDiv = document.getElementById('mindmapInfo');
+        infoDiv.innerHTML = descriptions[id] || '<em>No description</em>';
+        // 平滑移动视图到节点
+        network.focus(id, { scale: 1.1, animation: { duration: 600 } });
+      }
+    });
+
+    // 双击节点将其展开（将其周围节点放大或居中）
+    network.on('doubleClick', function(params) {
+      if (params.nodes.length > 0) {
+        const id = params.nodes[0];
+        // zoom a bit
+        network.moveTo({ position: network.getPositions([id])[id], scale: 1.2, animation: true });
+      }
+    });
+
+    // hover 样式（改变节点阴影/样式）——简单视觉反馈
+    network.on('hoverNode', function(params){
+      data.nodes.update({ id: params.node, font: { color: '#fff', size: 15 } });
+    });
+    network.on('blurNode', function(params){
+      data.nodes.update({ id: params.node, font: { color: '#fff', size: 14 } });
+    });
+
+    // mobile tip: 触摸/滚动提示
+    window.addEventListener('resize', function(){
+      // 视口变化时适当调整 fit
+      network.redraw();
+    });
+
+  })();
 </script>
 
 
