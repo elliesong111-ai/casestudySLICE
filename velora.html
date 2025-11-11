@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Velora – UI/UX Case Study</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #faf8ff;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(120deg, #c2b6ff, #e8d8ff);
+      padding: 80px 20px;
+      text-align: center;
+      color: #333;
+    }
+
+    header h1 {
+      font-size: 56px;
+      margin-bottom: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 22px;
+      opacity: 0.85;
+    }
+
+    section {
+      padding: 50px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+      color: #4b3ca5;
+    }
+
+    .team-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .team-member {
+      flex: 1;
+      min-width: 250px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-4px);
+    }
+
+    .timeline, .features, .challenges {
+      background: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      margin-bottom: 40px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .feature-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .feature-gallery img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .feature-gallery img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .feature-caption {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 14px;
+      color: #777;
+      background: #f0eaff;
+      border-top: 1px solid #e0d5ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Velora</h1>
+    <p>Smooth, luxurious sound — a web-based photo booth experience</p>
+  </header>
+
+  <section>
+    <h2>Team Members</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <h3>Kyla Lam</h3>
+        <p><strong>Role:</strong> UI Designer</p>
+        <p>Designed the visual layout, color palette, and Figma prototypes for Velora.</p>
+      </div>
+      <div class="team-member">
+        <h3>Sunny Wu</h3>
+        <p><strong>Role:</strong> Frontend Developer</p>
+        <p>Implemented the camera, lighting, decoration, upload, and download features.</p>
+      </div>
+      <div class="team-member">
+        <h3>Ellie Song</h3>
+        <p><strong>Role:</strong> UX Researcher</p>
+        <p>Led user research, usability testing, and interaction flow optimization.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Project Overview</h2>
+    <p>Velora is a web-based photo booth that allows users to capture or upload photos, apply lighting filters, decorate with stickers, and download the final image. Inspired by velvet and aura, Velora delivers a smooth, elegant user experience.</p>
+  </section>
+
+  <section class="timeline">
+    <h2>Design Timeline</h2>
+    <ul>
+      <li><strong>Week 1–2:</strong> Concept planning, wireframes, webcam setup</li>
+      <li><strong>Week 3–4:</strong> UI refinement, lighting filters, midterm testing</li>
+      <li><strong>Week 5–6:</strong> Decoration system, upload + drag/zoom/shrink feature</li>
+      <li><strong>Week 7–8:</strong> Branding, bug fixes, final demo prep</li>
+    </ul>
+  </section>
+
+  <section class="features">
+    <h2>Core Features</h2>
+    <ul>
+      <li><strong>Live Camera:</strong> Real-time webcam preview with capture button</li>
+      <li><strong>Lighting Filters:</strong> Warm, cool, vintage tones via CSS</li>
+      <li><strong>Decorations:</strong> Drag-and-drop stickers, emojis, frames</li>
+      <li><strong>Upload & Edit:</strong> Upload photos, drag to reposition, zoom/shrink with gestures</li>
+      <li><strong>Download:</strong> Export final image with all overlays</li>
+    </ul>
+
+    <div class="feature-gallery">
+      <div>
+        <img src="dcc5e938c66ff269404a9a75c7abbbf4.png" alt="Camera Access Interface">
+        <div class="feature-caption">Camera Permission Prompt</div>
+      </div>
+      <div>
+        <img src="718d2358d2f4a940410bfbcb37a3e273.png" alt="Lighting Control">
+        <div class="feature-caption">Lighting and Color Controls</div>
+      </div>
+      <div>
+        <img src="aa85d498aea8c8298087829b9e1ad20c.jpg" alt="Upload Interface">
+        <div class="feature-caption">Upload Photo Modal</div>
+      </div>
+      <div>
+        <img src="91eca2029561de13f9a575c646410554.jpg" alt="Sticker Decoration">
+        <div class="feature-caption">Stickers and Decorations</div>
+      </div>
+      <div>
+        <img src="7fd7f7809f95bddbe2a7ff92a271db1b.png" alt="Final Output">
+        <div class="feature-caption">Final Photo Booth Output</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="challenges">
+    <h2>Challenges & Solutions</h2>
+    <ul>
+      <li><strong>Browser Compatibility:</strong> Used WebRTC and tested across Chrome, Safari, Edge</li>
+      <li><strong>Image Merging:</strong> Used HTML canvas to combine camera and decorations</li>
+      <li><strong>Drag/Zoom/Shrink:</strong> Implemented with JavaScript and CSS transforms</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Final Outcome</h2>
+    <p>Velora is a fully functional, elegant photo booth web app ready for demo day. It combines intuitive UI, playful features, and smooth performance to deliver a delightful user experience.</p>
+  </section>
+
+  <footer>
+    &copy; 2025 Velora Project Team — Kyla Lam, Sunny Wu, Ellie Song
+  </footer>
+</body>
+</html>
